@@ -2,12 +2,12 @@ const { User } = require('../models')
 const { verifyPassword } = require('../helper/bcrypt')
 const { generateJwt, verifyJwt } = require('../helper/jwt')
 const createError = require('../helper/errors')
+const { OAuth2Client } = require('google-auth-library')
 const axios = require('axios')
 const instance = axios.create({
   baseURL: `https://api.mailboxvalidator.com/v1/validation/single?key=${process.env.APIKEY}`
 });
 
-// const { OAuth2Client } = require('google-auth-library')
 
 
 class ControllerUser {
@@ -27,6 +27,17 @@ class ControllerUser {
       .then(user => {
         let payload = { id: user.id, username: user.username, email: user.email }
         const token = generateJwt(payload)
+
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+        const msg = {
+          to: `${user.email}`,
+          from: 'novan.top@gmail.com',
+          subject: 'WELCOME ZODIAK APP',
+          text: `HEI ${user.username} WaDub Bruv`,
+          html: `<strong>HEI ${user.username} WaDub Bruv</strong>`,
+        }
+        sgMail.send(msg);
         res.status(201).json(token)
       })
       .catch(err => {
@@ -58,49 +69,48 @@ class ControllerUser {
   }
 
 
-  // static googleSign(req, res, next) {
-  //   let payload
-  //   const client = new OAuth2Client(process.env.GoogleClienId)
-  //   client.verifyIdToken({
-  //     idToken: req.body.token,
-  //     audience: process.env.GoogleClienId,  // Specify the CLIENT_ID of the app that accesses the backend
-  //     // Or, if multiple clients access the backend:
-  //     //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
-  //   })
-  //     .then(ticket => {
-  //       payload = ticket.getPayload()
-  //       // const userid = payload['sub']
-  //       return User
-  //         .findOne({
-  //           where: {
-  //             email: payload.email
-  //           }
-  //         })
-  //         .then(result => {
-  //           if (result) {
-
-  //             // const token = jwt.sign({ email: result.email, id: result.id }, process.env.JWT)
-  //             let payload = { email: result.email, id: result.id }
-  //             const token = generateJwt(payload)
-  //             res.status(201).json(token)
-  //           } else {
-  //             User
-  //               .create({
-  //                 username: payload.given_name,
-  //                 email: payload.email,
-  //                 password: process.env.DefaultPassword
-  //               })
-  //               .then(newUser => {
-  //                 const token = jwt.sign({ email: newUser.email, id: newUser.id }, process.env.JWT)
-  //                 res.status(201).json(token)
-  //               })
-  //           }
-  //         })
-  //     })
-  //     .catch(err => {
-  //       next(err)
-  //     })
-  // }
+  static googleSign(req, res, next) {
+    let payload
+    const client = new OAuth2Client(process.env.GOOGLEID)
+    client.verifyIdToken({
+      idToken: req.body.token,
+      audience: process.env.GOOGLEID,  // Specify the CLIENT_ID of the app that accesses the backend
+      // Or, if multiple clients access the backend:
+      //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+    })
+      .then(ticket => {
+        payload = ticket.getPayload()
+        // const userid = payload['sub']
+        return User
+          .findOne({
+            where: {
+              email: payload.email
+            }
+          })
+          .then(result => {
+            if (result) {
+              // const token = jwt.sign({ email: result.email, id: result.id }, process.env.JWT)
+              let payload = { email: result.email, id: result.id }
+              const token = generateJwt(payload)
+              res.status(201).json(token)
+            } else {
+              User
+                .create({
+                  username: payload.given_name,
+                  email: payload.email,
+                  password: process.env.DefaultPassword
+                })
+                .then(newUser => {
+                  const token = jwt.sign({ email: newUser.email, id: newUser.id }, process.env.JWT)
+                  res.status(201).json(token)
+                })
+            }
+          })
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
 
 }
 module.exports = ControllerUser

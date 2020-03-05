@@ -80,3 +80,24 @@ function registerUser(username, email, password) {
       console.log(err.responseJSON)
     })
 }
+
+function onSignIn(googleUser) {
+
+  var id_token = googleUser.getAuthResponse().id_token;
+
+  $.ajax({
+    method: "POST",
+    url: `${server}/users/googleSignIn`,
+    data: {
+      token: id_token
+    }
+  })
+    .done(data => {
+      localStorage.setItem('token', data)
+      $('#pageZodiak').show()
+      $("#login").hide()
+    })
+    .fail(err => {
+      console.log(err.responseJSON)
+    })
+}

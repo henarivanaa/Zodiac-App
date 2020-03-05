@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id"
+        content="998841815743-jia58sd0qaeqfs3c6n6pd4lfqgtqt9ai.apps.googleusercontent.com">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <title>Zodiak App</title>
 </head>
 
@@ -24,6 +27,7 @@
             </div>
             <button type="submit" class="btn btn-primary">login</button>
             <button type="button" class="btn btn-primary" id="toRegister">to Register</button>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
         </form>
     </div>
 
@@ -55,6 +59,7 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="./js/user.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 
 </html>
