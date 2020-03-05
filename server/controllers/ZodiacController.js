@@ -11,11 +11,11 @@ class ZodiacController {
                     let startDate = zodiac.sun_dates[0].split(' ')
                     let endDate = zodiac.sun_dates[1].split(' ')
                     if (birthmonth.toLowerCase() === startDate[0].toLowerCase()) {
-                        if (Number(birthdate) > Number(startDate[1])) {
+                        if (Number(birthdate) >= Number(startDate[1])) {
                             res.status(200).json(zodiac)
                         }
                     } else if (birthmonth.toLowerCase() === endDate[0].toLowerCase()) {
-                        if (Number(birthdate) < Number(endDate[1])) {
+                        if (Number(birthdate) <= Number(endDate[1])) {
                             res.status(200).json(zodiac)
                         }
                     }
