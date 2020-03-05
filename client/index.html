@@ -104,9 +104,68 @@
           </div>
           <button id="button-apakek" value="hahaha">sadfasdf</button>
     </div>
+
+    <div id="divform" class="container">
+      <form id="list-form">
+          <div class="form-group">
+              <label for="usr">Tanggal Lahir:</label>
+              <input type="text" class="form-control" id="tanggallahir" name="name">
+          </div>
+          <div>
+              <label>Bulan</label>
+              <select class="form-control" id="bulanlahir">
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>Mei</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+              </select>          
+          </div>
+          <button id="tombolsubmit" type="submit" class="btn btn-primary">Submit</button>
+      </form>
+  </div>
       <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
       <script src="jquery.js" ></script>
+
+      <script>
+                $("#list-form").submit(function (event) {
+            event.preventDefault()
+            $.ajax({
+                url: "http://localhost:3000/zodiacs",
+                type: "POST",
+                data: {
+                    birthdate : $("#tanggallahir").val(),
+                    birthmonth : $("#bulanlahir").val()
+                },
+                success: function (data) {
+                    console.log(data)
+                }
+            })
+        })
+
+        $("#gantibahasa").click(function (event) {
+            event.preventDefault()
+            $.ajax({
+                url: "http://localhost:3000/zodiacs/translate",
+                type: "POST",
+                data: {
+                    body : $("#CONTENT").val(),
+                },
+                success: function (data) {
+                    console.log(data)
+                }
+            })
+        })
+        
+      </script>
 </body>
 </html>
