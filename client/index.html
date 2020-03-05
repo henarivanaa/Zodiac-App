@@ -1,11 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Zodiak App</title>
 </head>
+
 <body>
-    
+
+    <div id="login">
+        <h1>Login</h1>
+        <form id="loginAction">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="emailLogin" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="passwordlogin">
+            </div>
+            <button type="submit" class="btn btn-primary">login</button>
+            <button type="button" class="btn btn-primary" id="toRegister">to Register</button>
+        </form>
+    </div>
+
+
+    <div id="register">
+        <h1>Register</h1>
+        <form id="registerAction">
+            <div class="form-group">
+                <label for="text">Username</label>
+                <input type="text" class="form-control" id="usernameRegister" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="emailRegister" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="passwordRegister">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Register</button>
+            <button type="button" class="btn btn-primary" id="toLogin">Login</button>
+        </form>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="./js/user.js"></script>
 </body>
+
 </html>
