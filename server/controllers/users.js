@@ -2,10 +2,8 @@ const { User } = require('../models')
 const { verifyPassword } = require('../helper/bcrypt')
 const { generateJwt, verifyJwt } = require('../helper/jwt')
 const createError = require('../helper/errors')
+
 // const { OAuth2Client } = require('google-auth-library')
-
-
-
 
 
 class ControllerUser {
