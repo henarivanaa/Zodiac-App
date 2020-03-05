@@ -2,6 +2,10 @@ const { User } = require('../models')
 const { verifyPassword } = require('../helper/bcrypt')
 const { generateJwt, verifyJwt } = require('../helper/jwt')
 const createError = require('../helper/errors')
+const axios = require('axios')
+const instance = axios.create({
+  baseURL: `https://api.mailboxvalidator.com/v1/validation/single?key=${process.env.APIKEY}`
+});
 
 // const { OAuth2Client } = require('google-auth-library')
 
@@ -9,14 +13,24 @@ const createError = require('../helper/errors')
 class ControllerUser {
   static registerUser(req, res, next) {
     let { username, email, password } = req.body
-    User
-      .create({ username, email, password })
+    instance.get(`&email=${email}`)
+      .then(validateResult => {
+        if (validateResult.data.is_verified == "True") {
+          return User.create({ username, email, password })
+        } else {
+          let err = createError(401, 'email invalid')
+          next(err)
+        }
+      })
+      // User
+      // .create({ username, email, password })
       .then(user => {
         let payload = { id: user.id, username: user.username, email: user.email }
         const token = generateJwt(payload)
         res.status(201).json(token)
       })
       .catch(err => {
+        // let err = createError(400, 'Bad Request')
         next(err)
       })
   }
