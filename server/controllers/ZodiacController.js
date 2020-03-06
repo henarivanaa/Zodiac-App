@@ -33,6 +33,7 @@ class ZodiacController {
         })
 
             .then(data => {
+                console.log(req.body.body)
                 res.status(201).json(data.data.responseData.translatedText)
             })
             .catch(err => {
