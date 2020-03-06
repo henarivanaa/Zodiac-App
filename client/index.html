@@ -2,39 +2,69 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <title>Zodiac App</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="google-signin-client_id"
+        content="998841815743-jia58sd0qaeqfs3c6n6pd4lfqgtqt9ai.apps.googleusercontent.com">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Zodiak App</title>
+
 </head>
 
 <body>
-  <div class="container">
-    <div class="text-center mt-3" id="zodiac-header">
 
+
+    <div id="login">
+        <h1>Login</h1>
+        <form id="loginAction">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="emailLogin">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="passwordlogin">
+            </div>
+            <button type="submit" class="btn btn-primary">login</button>
+            <button type="button" class="btn btn-primary" id="toRegister">to Register</button>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        </form>
     </div>
-    <div class="text-center mt-3" id="zodiac-date-header">
 
+
+    <div id="register">
+        <h1>Register</h1>
+        <form id="registerAction">
+            <div class="form-group">
+                <label for="text">Username</label>
+                <input type="text" class="form-control" id="usernameRegister" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="emailRegister" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="passwordRegister">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Register</button>
+            <button type="button" class="btn btn-primary" id="toLogin">Login</button>
+        </form>
     </div>
-    <div class="accordion mt-4" id="zodiac-list">
-      <div class="card">
-        <div class="card-header" id="headingOne">
-          <h2 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
-              aria-expanded="true" aria-controls="collapseOne">
-              Phisical Traits
-            </button>
-          </h2>
-        </div>
 
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#zodiac-list">
-          <div class="card-body" id="physical">
 
-          </div>
-          <div class="container text-center mb-4">
-            <button id = "physicaltranslate" type="button" class="btn btn-info btn-sm">Translate</button>
-          </div>
+
+        <button type="button" class="btn btn-primary" id="logout">Logout</button>
+    </div>
+
+
+    <div class="container">
+        <div class="text-center mt-3" id="zodiac-header">
+            
         </div>
       </div>
       <div class="card">
@@ -154,20 +184,49 @@
       <button id="tombolsubmit" type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-    crossorigin="anonymous"></script>
-  <script src="jquery.js"></script>
 
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+      <script src="jquery.js" ></script>
+      <script src="./js/user.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
-  <script>
+      <script>
+                $("#list-form").submit(function (event) {
+            event.preventDefault()
+            $.ajax({
+                url: "http://localhost:3000/zodiacs",
+                type: "POST",
+                data: {
+                    birthdate : $("#tanggallahir").val(),
+                    birthmonth : $("#bulanlahir").val()
+                },
+                success: function (data) {
+                    $('#zodiac-header').empty()
+                    $('#zodiac-date-header').empty()
+                    $('.card-body').empty()
+                    showZodiac(data)
+                }
+            })
+        })
 
-
-  </script>
+        $("#gantibahasa").click(function (event) {
+            event.preventDefault()
+            $.ajax({
+                url: "http://localhost:3000/zodiacs/translate",
+                type: "POST",
+                data: {
+                    body : $("#CONTENT").val(),
+                },
+                success: function (data) {
+                    console.log(data)
+                }
+            })
+        })
+        
+      </script>
 </body>
 
 </html>
