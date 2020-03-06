@@ -29,14 +29,13 @@ class ZodiacController {
     static translateText(req, res) {
         axios({
             method: 'get',
-            url: `https://api.mymemory.translated.net/get?q=${req.body.body}&langpair=en|id`
+            url: `https://api.mymemory.translated.net/get?q=${req.body.body}&langpair=en|id&de=bambadom@gmail.com`
         })
-
             .then(data => {
-                console.log(req.body.body)
                 res.status(201).json(data.data.responseData.translatedText)
             })
             .catch(err => {
+                console.log(err)
                 res.status(500).json(err)
             })
 
