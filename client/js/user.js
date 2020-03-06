@@ -12,9 +12,12 @@ $(document).ready(function () {
   if (!localStorage.getItem('token')) {
     $("#login").show()
     $('#logout').hide()
+    $('#list-form').hide()
   } else {
     $("#login").hide()
-
+    $('#list-form').show()
+    $('#pageZodiak').show()
+    $('#logout').show()
   }
 
   $("#toRegister").on('click', function () {
@@ -25,10 +28,6 @@ $(document).ready(function () {
   $('#toLogin').on('click', function () {
     $("#login").show()
     $("#register").hide()
-  })
-
-  $('#login').on('submit', function () {
-    loginUser()
   })
 
   // to login action
@@ -50,7 +49,9 @@ $(document).ready(function () {
 
   $('#logout').on('click', function (event) {
     logout()
+    $('#loginAction')[0].reset()
     $('#login').show()
+    $('#logout').hide()
   })
 
 
@@ -59,6 +60,7 @@ $(document).ready(function () {
 
 
 function loginUser(email, password) {
+  console.log("1asdasdas")
   $.ajax({
     method: 'POST',
     url: `${server}/users/login`,
@@ -72,6 +74,7 @@ function loginUser(email, password) {
       $('#pageZodiak').show()
       $("#login").hide()
       $('#logout').show()
+      $('#list-form').show()
       Swal.fire({
         title: 'OK Halo!',
         text: 'selamat datang...anda sehat ?.',
@@ -82,6 +85,7 @@ function loginUser(email, password) {
       })
     })
     .fail(err => {
+      console.log('masuk error')
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -141,7 +145,6 @@ function registerUser(username, email, password) {
 
 function onSignIn(googleUser) {
   var id_token = googleUser.getAuthResponse().id_token;
-
   $.ajax({
     method: "POST",
     url: `${server}/users/googleSignIn`,
@@ -154,6 +157,7 @@ function onSignIn(googleUser) {
       $('#pageZodiak').show()
       $("#login").hide()
       $('#logout').show()
+      $('#list-form').show()
       Swal.fire({
         title: 'Yay Selamat!',
         text: 'selamat datang...',
@@ -197,5 +201,6 @@ function logout() {
     console.log('User signed out.');
   })
   $('#pageZodiak').hide()
+  $('#list-form').hide()
 }
 

@@ -62,11 +62,32 @@
     </div>
 
 
-    <div class="container">
+    <div class="container" id="pageZodiak">
         <div class="text-center mt-3" id="zodiac-header">
             
         </div>
-      </div>
+        <div class="text-center mt-3" id="zodiac-date-header">
+
+        </div>
+        <div class="accordion mt-4" id="zodiac-list">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    Physical Traits
+                  </button>
+                </h2>
+              </div>
+          
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#zodiac-list">
+                <div class="card-body" id="physical">
+
+                </div>
+                    <div class="container text-center mb-4">
+                        <button id="physicaltranslate" type="button" class="btn btn-info btn-sm">Translate</button>
+                    </div>
+              </div>
+        </div>
       <div class="card">
         <div class="card-header" id="headingTwo">
           <h2 class="mb-0">
@@ -155,7 +176,7 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 
 
   <div id="divform" class="container">
@@ -193,7 +214,7 @@
       <script src="./js/user.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
-      <script>
+      <!-- <script>
                 $("#list-form").submit(function (event) {
             event.preventDefault()
             $.ajax({
@@ -226,7 +247,7 @@
             })
         })
         
-      </script>
+      </script> -->
 </body>
 
 </html>
