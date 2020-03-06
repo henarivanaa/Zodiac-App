@@ -68,6 +68,52 @@ class ControllerUser {
       })
   }
 
+  static editUser(req, res, next) {
+    let id = req.params.id
+    User
+      .findOne({ where: { id } })
+      .then(data => {
+        if (data) {
+          res.status(201).json(data.username)
+        } else {
+          throw createError(403, 'Forbidden')
+        }
+
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
+
+  static editUserUpdate(req, res, next) {
+    let { username } = req.body
+    let id = req.params.id
+    User
+      .update({ username }, { where: { id } })
+      .then(data => {
+        if (data) {
+          res.status(201).json(data)
+        } else {
+          throw createError(404, 'NotFound')
+        }
+      })
+      .catch(err => {
+        next(err)
+      })
+  }
+
+  static deleteUser(req, res, next) {
+    let id = req.params.id
+    User
+      .destroy({ where: { id } })
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        next(err)
+      })
+
+  }
 
   static googleSign(req, res, next) {
     let payload

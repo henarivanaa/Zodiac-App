@@ -53,6 +53,8 @@ $(document).ready(function () {
     $('#login').show()
   })
 
+
+
 });
 
 
@@ -138,7 +140,6 @@ function registerUser(username, email, password) {
 }
 
 function onSignIn(googleUser) {
-
   var id_token = googleUser.getAuthResponse().id_token;
 
   $.ajax({
@@ -177,8 +178,11 @@ function onSignIn(googleUser) {
     })
 }
 
-function logout() {
 
+
+
+
+function logout() {
   Swal.fire({
     title: 'Sampai Ketemu lagi..!',
     text: 'hu.hu.hu',
@@ -193,5 +197,5 @@ function logout() {
     console.log('User signed out.');
   })
   $('#pageZodiak').hide()
-
 }
+
