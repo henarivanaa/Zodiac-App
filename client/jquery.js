@@ -43,3 +43,96 @@ const showZodiac = zodiac => {
     })
 }
 
+        $("#list-form").submit(function (event) {
+      event.preventDefault()
+      $.ajax({
+        url: "http://localhost:3000/zodiacs",
+        type: "POST",
+        data: {
+          birthdate: $("#tanggallahir").val(),
+          birthmonth: $("#bulanlahir").val()
+        },
+        success: function (data) {
+          $('#zodiac-header').empty()
+          $('#zodiac-date-header').empty()
+          $('.card-body').empty()
+          showZodiac(data)
+        }
+      })
+    })
+
+    $("#physicaltranslate").click(function (event) {
+      event.preventDefault()
+      $.ajax({
+        url: "http://localhost:3000/zodiacs/translate",
+        type: "POST",
+        data: {
+          body: $("#physical").text()
+        },
+        success: function (data) {
+          $("#physical").empty()
+          $("#physical").append(data)
+        }
+      })
+    })
+
+    $("#mentaltranslate").click(function (event) {
+      event.preventDefault()
+      $.ajax({
+        url: "http://localhost:3000/zodiacs/translate",
+        type: "POST",
+        data: {
+          body: $("#mental").text()
+        },
+        success: function (data) {
+          $("#mental").empty()
+          $("#mental").append(data)
+        }
+      })
+    })
+
+    $("#compatibletranslate").click(function (event) {
+      event.preventDefault()
+      $.ajax({
+        url: "http://localhost:3000/zodiacs/translate",
+        type: "POST",
+        data: {
+          body: $("#compatible").text()
+        },
+        success: function (data) {
+          $("#compatible").empty()
+          $("#compatible").append(data)
+        }
+      })
+    })
+
+    $("#hatetranslate").click(function (event) {
+      event.preventDefault()
+      $.ajax({
+        url: "http://localhost:3000/zodiacs/translate",
+        type: "POST",
+        data: {
+          body: $("#hate").text()
+        },
+        success: function (data) {
+          $("#hate").empty()
+          $("#hate").append(data)
+        }
+      })
+    })
+
+    $("#favoritetranslate").click(function (event) {
+      event.preventDefault()
+      $.ajax({
+        url: "http://localhost:3000/zodiacs/translate",
+        type: "POST",
+        data: {
+          body: $("#favorites").text()
+        },
+        success: function (data) {
+          $("#favorites").empty()
+          $("#favorites").append(data)
+        }
+      })
+    })
+
