@@ -10,7 +10,7 @@ app.use(cors())
 
 // body parser
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 
 // routes
 app.use(routes)
