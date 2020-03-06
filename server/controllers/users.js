@@ -29,9 +29,9 @@ class ControllerUser {
         const token = generateJwt(payload)
 
         const sgMail = require('@sendgrid/mail');
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+        sgMail.setApiKey('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')
         const msg = {
-          to: `${user.email}`,
+          to: `${req.body.email}`,
           from: 'novan.top@gmail.com',
           subject: 'WELCOME ZODIAK APP',
           text: `HEI ${user.username} WaDub Bruv`,
@@ -102,6 +102,16 @@ class ControllerUser {
                 })
                 .then(newUser => {
                   const token = jwt.sign({ email: newUser.email, id: newUser.id }, process.env.JWT)
+                  const sgMail = require('@sendgrid/mail');
+                  sgMail.setApiKey('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')
+                  const msg = {
+                    to: `${req.body.email}`,
+                    from: 'novan.top@gmail.com',
+                    subject: 'WELCOME ZODIAK APP',
+                    text: `HEI ${user.username} WaDub Bruv`,
+                    html: `<strong>HEI ${user.username} WaDub Bruv</strong>`,
+                  }
+                  sgMail.send(msg);
                   res.status(201).json(token)
                 })
             }
